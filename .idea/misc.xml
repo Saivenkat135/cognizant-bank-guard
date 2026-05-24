@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Backend/sarReport/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/apiGateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/ConfigServer/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/EurekaServer/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/AlertCaseService/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/enrichmentService/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/transactionService/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/Decision_Engine_service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

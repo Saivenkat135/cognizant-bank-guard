@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/* Inter — clean, formal banking-style sans-serif (very close to JPMorgan's Aspira).
+   Loaded via <link> in index.html so it's not subject to PostCSS @import ordering. */
+
+/*
+  Formal light theme — banking palette (JPMC navy / SBI blue family).
+  Surfaces are crisp white; navbar is a deep navy gradient; accents are royal blue.
+*/
+:root {
+  --bg:           #f4f6fa;     /* page background — barely blue tint */
+  --surface:      #ffffff;     /* cards, tables */
+  --surface-2:    #f1f5f9;     /* hover / striped rows */
+  --surface-3:    #eef2f7;
+  --border:       #e2e8f0;     /* slate-200 */
+  --border-2:     #cbd5e1;     /* slate-300, hover/focus */
+  --text:         #0f172a;     /* slate-900 — primary text */
+  --text-2:       #334155;     /* slate-700 — secondary text */
+  --muted:        #64748b;     /* slate-500 — captions */
+
+  /* Brand */
+  --navy:         #0b2a5b;     /* navbar deep */
+  --navy-2:       #143e85;     /* navbar mid */
+  --primary:      #1e40af;     /* primary accent — royal blue */
+  --primary-hover:#1e3a8a;
+  --primary-soft: #e7eefb;     /* active sidebar item */
+  --primary-ring: rgba(30, 64, 175, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility classes (used alongside Tailwind) */
+.bg-app           { background: var(--bg); }
+.bg-surface       { background: var(--surface); }
+.bg-surface-2     { background: var(--surface-2); }
+.bg-primary-soft  { background: var(--primary-soft); }
+.text-muted       { color: var(--muted); }
+.text-primary     { color: var(--primary); }
+.text-navy        { color: var(--navy); }
+.border-app       { border-color: var(--border); }
+.border-2-app     { border-color: var(--border-2); }
+.font-display     { font-weight: 700; letter-spacing: -0.015em; }
+
+/* The actual navy bar at the top of every protected page */
+.navbar {
+  background: linear-gradient(90deg, var(--navy) 0%, var(--navy-2) 100%);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(11, 42, 91, 0.10);
+}
+.navbar a, .navbar button { color: #ffffff; }
+.navbar .nav-muted { color: #c7d3ea; }
+
+/* HDFC-style thin accent stripe directly under the navy bar */
+.navbar-accent {
+  height: 3px;
+  background: linear-gradient(90deg, #1e40af 0%, #2563eb 35%, #38bdf8 75%, #1e40af 100%);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.005em;
+  border: 1px solid var(--primary);
+  box-shadow: 0 1px 2px rgba(30, 64, 175, 0.15);
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+.btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text-2);
+  padding: 0.55rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--border-2); color: var(--text); }
+
+/* Inverse ghost — used on the navy navbar */
+.btn-navbar-ghost {
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  padding: 0.45rem 0.95rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-navbar-ghost:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.32); }
+
+/* Inputs */
+.input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input::placeholder { color: #94a3b8; }
+.input:hover  { border-color: var(--border-2); }
+.input:focus  {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-ring);
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+/* Tables */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow-x: auto;           /* let the table scroll horizontally on small screens */
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.table-wrap table { width: 100%; border-collapse: collapse; min-width: 640px; }
+.table-wrap th,
+.table-wrap td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.table-wrap th {
+  background: #f8fafc;
+  color: #475569;                 /* slate-600 — a touch darker than muted */
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  border-bottom: 1px solid var(--border-2);
+}
+.table-wrap tr:last-child td { border-bottom: 0; }
+.table-wrap tbody tr:nth-child(even) td { background: #fafbfd; }
+.table-wrap tbody tr:hover td { background: var(--primary-soft); }
+
+/* Status pills */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.18rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid;
+  text-transform: capitalize;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+.badge::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+/* Sidebar slide-in transition (mobile drawer) */
+.sidebar-slide {
+  transition: transform 0.25s ease-out;
+}
+
+/* Scrollbar polish (Webkit) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-track { background: transparent; }

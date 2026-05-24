@@ -1,0 +1,57 @@
+#spring:
+#  application:
+#    name: alert-case-service
+#  config:
+#    import: configserver:http://localhost:8888
+#  datasource:
+#
+#    url: jdbc:mysql://localhost:3306/alert_case_db?createDatabaseIfNotExist=true
+#    username: root          # Put your MySQL username here
+#    password: root # Put your MySQL password here
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#
+#external:
+#  reporting-service:
+#    url: http://localhost:8088/sar/ingest-report
+#
+#server:
+#  port: 8085
+#
+## swagger-ui custom path
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+
+
+
+
+spring:
+  application:
+    name: alert-case-service
+  config:
+    import: configserver:http://localhost:8888
+  cloud:
+    config:
+      profile: dev
+      fail-fast: true
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+
+

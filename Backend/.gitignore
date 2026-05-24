@@ -1,0 +1,16 @@
+# Ignore build folders
+target/
+
+# IntelliJ files
+.idea/
+*.iml
+.vscode
+# Compiled files
+*.class
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
