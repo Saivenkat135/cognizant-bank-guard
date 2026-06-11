@@ -1,118 +1,623 @@
-# BankGuard Project Overview
+# 🚨 Real-Time Payment Monitoring & Fraud Detection System
 
-## Project Description
-BankGuard is a comprehensive microservices-based fraud detection system designed for banking transactions. The system leverages Google's Gemini AI to analyze and determine whether a transaction is genuine or fraudulent, providing real-time protection against financial fraud.
+## 📌 Overview
 
-## Architecture Overview
-The project follows a microservices architecture with the following components:
+A scalable **Microservices-Based Real-Time Payment Monitoring and Fraud Detection System** designed to detect and prevent fraudulent transactions **before they are completed**.
 
-1. **API Gateway** - Entry point for all client requests, handles routing and load balancing
-2. **Transaction Service** - Manages customer and transaction data
-3. **Enrichment Service** - Enriches transaction data and performs initial validations
-4. **Decision Engine Service** - Uses Gemini AI for fraud detection analysis
-5. **AlertCase Service** - Handles fraud alerts and investigation cases
-6. **SAR Report Service** - Manages Suspicious Activity Reports
+Unlike traditional fraud detection systems that rely solely on rigid predefined rules, this platform combines:
 
-## Transaction Flow
+* Rule-Based Validation
+* AI-Powered Decision Making using Google Gemini
+* Dynamic Risk Scoring
+* Case Management
+* Regulatory SAR Reporting
+
+The system acts as an intelligent fraud detection layer between third-party payment applications (such as Google Pay, PhonePe, Paytm, etc.) and banking systems.
+
+When a transaction is initiated, the payment application sends:
+
+* Customer Details
+* Current Transaction Information
+* Previous 5 Transaction Records
+
+The system then performs real-time analysis and determines whether the transaction should be:
+
+✅ Approved
+
+⚠️ Flagged
+
+❌ Terminated
+
+before money movement occurs.
+
+---
+
+# 🎯 Problem Statement
+
+Traditional fraud detection systems rely on static rules such as:
 
 ```
-Client Request
-      ↓
-  API Gateway
-      ↓
-Transaction Service (Store/Retrieve transaction data)
-      ↓
-Enrichment Service (Validate & enrich transaction)
-      ↓
-Decision Engine Service (Gemini AI analysis)
-      ↓
-Response (Fraud decision)
-      ↓
-├── AlertCase Service (Generate alerts if fraudulent)
-└── SAR Report Service (Generate reports if needed)
+IF amount > 10000 THEN Block Transaction
 ```
 
-## Microservices and Their APIs
+These approaches:
 
-### 1. API Gateway
-- **Purpose**: Routes incoming requests to appropriate microservices
-- **Technology**: Spring Cloud Gateway (WebFlux)
-- **APIs**: Acts as a proxy, no direct business APIs
+* Generate false positives
+* Are easy for fraudsters to bypass
+* Cannot understand customer behavior
+* Lack contextual reasoning
 
-### 2. Transaction Service
-- **Purpose**: Manages customer profiles and transaction records
-- **Technology**: Spring Boot with JPA and MySQL
-- **APIs**:
-  - `POST /api/customers` - Create customer
-  - `GET /api/customers` - Get all customers
-  - `GET /api/customers/{customerId}` - Get customer by ID
-  - `PUT /api/customers/{customerId}` - Update customer
-  - `DELETE /api/customers/{customerId}` - Delete customer
-  - `GET /api/customers/email/{email}` - Get customer by email
-  - `GET /api/customers/account/{accountNo}` - Get customer by account
-  - `POST /api/transactions` - Create transaction
-  - `GET /api/transactions` - Get all transactions
-  - `GET /api/transactions/{transactionId}` - Get transaction by ID
-  - `PUT /api/transactions/{transactionId}` - Update transaction
-  - `DELETE /api/transactions/{transactionId}` - Delete transaction
-  - `GET /api/transactions/customer/{customerId}` - Get transactions by customer
-  - `GET /api/transactions/receiver/{receiverAccountNumber}` - Get transactions by receiver
+This project addresses those limitations by integrating **Google Gemini AI** into the fraud detection pipeline.
 
-### 3. Enrichment Service
-- **Purpose**: Validates and enriches transaction data before fraud analysis
-- **Technology**: Spring Boot with WebFlux
-- **APIs**:
-  - `POST /api/enrich/transaction/with-decision-and-alert` - Process transaction with full flow
-  - `POST /api/enrich/transaction` - Enrich transaction data
-  - `POST /api/enrich/transaction/with-decision` - Enrich and get decision
-  - `POST /api/enrich/validate/amount` - Validate transaction amount
-  - `POST /api/enrich/validate/balance` - Validate account balance
-  - `POST /api/enrich/validate/ip` - Validate IP address
+Gemini analyzes:
 
-### 4. Decision Engine Service
-- **Purpose**: Uses Google's Gemini AI to analyze transactions for fraud detection
-- **Technology**: Spring Boot
-- **APIs**:
-  - `POST /api/gemini/analyze-transaction` - Analyze transaction using Gemini AI
+* Customer transaction history
+* Geographical patterns
+* Transaction anomalies
+* Risk manager policies
+* Behavioral indicators
 
-### 5. AlertCase Service
-- **Purpose**: Manages fraud alerts and investigation cases
-- **Technology**: Spring Boot with JPA
-- **APIs**:
-  - `POST /api/investigation/ingest-fraud-alert` - Ingest fraud alert
-  - `POST /api/investigation/ingest` - Ingest investigation data
+and generates:
 
-### 6. SAR Report Service
-- **Purpose**: Generates and manages Suspicious Activity Reports
-- **Technology**: Spring Boot with JPA and MySQL
-- **APIs**:
-  - `POST /sar/ingest-report` - Ingest SAR report
-  - `POST /sar/report` - Create SAR report
-  - `GET /sar/reports` - Get all reports
-  - `GET /sar/report/id/{sarId}` - Get report by ID
-  - `GET /sar/report/name/{customerName}` - Get reports by customer name
-  - `GET /sar/report/account/{customerAccountNo}` - Get reports by account
-  - `GET /sar/report/status/{status}` - Get reports by status
-  - `GET /sar/report/transaction/{transactionId}` - Get reports by transaction
-  - `GET /sar/report/city/{city}` - Get reports by city
-  - `GET /sar/report/state/{state}` - Get reports by state
+* Fraud Status
+* Risk Score
+* Human-readable Reasoning
 
-## Key Features
+for every transaction.
 
-- **AI-Powered Fraud Detection**: Utilizes Google's Gemini AI for intelligent transaction analysis
-- **Microservices Architecture**: Scalable and maintainable service-oriented design
-- **Real-time Processing**: End-to-end transaction processing with immediate fraud detection
-- **Comprehensive Validation**: Multi-layer validation including amount, balance, and IP checks
-- **Alert Management**: Automated alert generation for suspicious activities
-- **Regulatory Compliance**: SAR report generation for compliance requirements
-- **Database Integration**: MySQL databases for persistent data storage
+---
 
-## Technology Stack
+# 🏗 System Architecture
 
-- **Backend**: Spring Boot, Spring Cloud Gateway
-- **AI Integration**: Google Gemini API
-- **Database**: MySQL
-- **Communication**: REST APIs, WebFlux for reactive programming
-- **Build Tool**: Maven
-- **Language**: Java 17/21</content>
-<parameter name="filePath">c:\Users\2485162\Documents\CTS_Bankguard-main 1\CTS_Bankguard-main\OverallProjectOverview.md
+The complete architecture diagram is available in:
+
+```bash
+/architecture-diagram.png
+```
+
+> Refer to the architecture diagram in the root folder for a visual representation of the end-to-end system flow.
+
+---
+
+# ⚙️ Technology Stack
+
+## Backend
+
+* Java
+* Spring Boot
+* Spring Cloud
+* Spring Security
+* Spring Data JPA
+* Spring Validation
+* REST APIs
+
+## AI & Fraud Analysis
+
+* Google Gemini API
+* Gemini 3 Flash Preview Model
+* Prompt Engineering
+* Risk Scoring Engine
+
+## Database
+
+* MySQL
+
+## Microservices Infrastructure
+
+* Eureka Server
+* Spring Cloud Config Server
+* API Gateway
+
+## Frontend
+
+* React.js
+* Bootstrap / Tailwind CSS
+
+## Reporting & Analytics
+
+* SAR Reporting Service
+* Fraud Analytics Dashboard
+
+---
+
+# 🧩 Microservices
+
+## 1️⃣ Transaction Service
+
+Responsible for:
+
+* Receiving transaction requests
+* Fetching customer details
+* Fetching previous transaction history
+* Sending transaction data to Enrichment Service
+* Completing money transfer for approved transactions
+
+---
+
+## 2️⃣ Enrichment Service
+
+Responsible for:
+
+### Business Validations
+
+* Customer existence validation
+* Balance verification
+* Account number validation
+* Transaction integrity checks
+
+### Data Transformation
+
+Creates:
+
+```java
+DecisionRequest
+```
+
+which contains:
+
+* Current Transaction
+* Last 5 Transactions
+
+and forwards it to the Decision Engine Service.
+
+---
+
+## 3️⃣ Decision Engine Service
+
+### Core Fraud Detection Engine
+
+This service was fully implemented by me.
+
+Built using:
+
+```text
+Google Gemini API
+Model: gemini-3-flash-preview
+```
+
+Responsibilities:
+
+* Rule-based fraud checks
+* Risk score calculation
+* Prompt generation
+* AI fraud analysis
+
+### Sample Validations
+
+#### Location Validation
+
+```text
+Current State == Previous Transaction State
+```
+
+Failure:
+
+```text
++10 Risk Score
+```
+
+---
+
+#### Transaction Amount Validation
+
+```text
+Current Amount <= Average of Previous Transactions
+```
+
+Failure:
+
+```text
+Risk Score Increased
+```
+
+---
+
+### Gemini Analysis
+
+The Decision Engine builds a structured prompt containing:
+
+* Current Transaction
+* Historical Transactions
+* Validation Results
+* Risk Indicators
+* Risk Manager Rules
+
+Gemini returns:
+
+```json
+{
+  "riskScore": 82,
+  "status": "FLAGGED",
+  "reason": "Transaction amount significantly exceeds historical spending behavior and location mismatch detected."
+}
+```
+
+---
+
+## 4️⃣ Alert & Case Service
+
+Triggered when a transaction is:
+
+* FLAGGED
+* TERMINATED
+
+Responsibilities:
+
+### Alert Management
+
+Generates:
+
+* Alert ID
+
+### Case Management
+
+Generates:
+
+* Case ID
+
+Stores:
+
+* Customer Details
+* Fraud Indicators
+* Transaction Information
+
+### Notification System
+
+Sends fraud alert emails to customers.
+
+---
+
+## 5️⃣ SAR Report Service
+
+Responsible for:
+
+* Regulatory Reporting
+* Fraud Investigation Support
+* Long-Term Fraud Storage
+* Compliance Tracking
+
+Stores:
+
+* Customer Information
+* Fraud Details
+* Alert Information
+* Case Information
+* Risk Scores
+
+---
+
+## 6️⃣ API Gateway
+
+Single entry point for all client requests.
+
+Responsibilities:
+
+* Routing
+* Load balancing
+* Security
+* Request forwarding
+
+---
+
+## 7️⃣ Eureka Server
+
+Provides:
+
+* Service Discovery
+* Dynamic Registration
+* Service Lookup
+
+---
+
+## 8️⃣ Config Server
+
+Provides centralized configuration management for all microservices.
+
+---
+
+# 🔄 End-to-End Transaction Flow
+
+## Step 1
+
+User initiates payment through:
+
+* GPay
+* PhonePe
+* Paytm
+* Any external payment application
+
+Transaction details are sent to:
+
+```text
+Transaction Service
+```
+
+---
+
+## Step 2
+
+Transaction Service gathers:
+
+* Customer Details
+* Current Transaction
+* Last 5 Transactions
+
+and forwards them to:
+
+```text
+Enrichment Service
+```
+
+---
+
+## Step 3
+
+Enrichment Service validates:
+
+* Balance
+* Customer existence
+* Account number
+* Transaction consistency
+
+Creates:
+
+```text
+DecisionRequest
+```
+
+and sends it to:
+
+```text
+Decision Engine Service
+```
+
+---
+
+## Step 4
+
+Decision Engine Service:
+
+* Executes fraud rules
+* Calculates risk score
+* Builds Gemini prompt
+* Receives AI response
+
+Returns:
+
+```json
+{
+  "status": "GENUINE | FLAGGED | TERMINATED",
+  "riskScore": 0-100,
+  "reason": "Fraud explanation"
+}
+```
+
+---
+
+## Step 5
+
+Enrichment Service processes decision.
+
+### Genuine
+
+Transaction continues successfully.
+
+### Flagged / Terminated
+
+* Transaction stopped
+* User notified
+* Fraud case generated
+
+---
+
+## Step 6
+
+Alert & Case Service:
+
+* Creates Alert
+* Creates Case
+* Stores investigation data
+* Sends notification email
+
+---
+
+## Step 7
+
+SAR Report Service stores fraud records for:
+
+* Compliance
+* Investigation
+* Analytics
+* Reporting
+
+---
+
+# 🎯 Fraud Detection Strategy
+
+The system uses a hybrid fraud detection model.
+
+## Rule-Based Layer
+
+Examples:
+
+* Location mismatch
+* Amount anomaly
+* Account validation
+* Historical behavior checks
+
+---
+
+## AI-Based Layer
+
+Google Gemini analyzes:
+
+* Customer behavior
+* Transaction context
+* Historical patterns
+* Fraud indicators
+
+and generates intelligent reasoning.
+
+---
+
+# 📊 Risk Scoring System
+
+Every transaction receives a risk score.
+
+| Risk Score | Status     |
+| ---------- | ---------- |
+| 0 - 30     | Genuine    |
+| 31 - 70    | Flagged    |
+| 71 - 100   | Terminated |
+
+Example:
+
+| Validation Failure       | Risk Added |
+| ------------------------ | ---------- |
+| Location Mismatch        | +10        |
+| Amount Anomaly           | +20        |
+| Multiple Risk Indicators | +30        |
+
+---
+
+# 👥 User Roles
+
+## Customer
+
+### Features
+
+* View Profile
+* Send Money
+* Transaction History
+* View Risk Scores
+* Notifications
+
+---
+
+## Fraud Analyst
+
+### Features
+
+* Investigate Fraud Cases
+* Review Alerts
+* Fraud Analytics
+* Filter Fraud Records
+* Area-wise Analysis
+* Bank-wise Analysis
+
+---
+
+## Risk Manager
+
+### Features
+
+* Manage Fraud Rules
+* Define Risk Thresholds
+* Monitor Risk Trends
+* Customer Monitoring
+* Transaction Monitoring
+
+---
+
+## Super Admin
+
+Full system access.
+
+Capabilities:
+
+* Manage Rules
+* Manage Users
+* View Analytics
+* Fraud Monitoring
+* Risk Monitoring
+* System Administration
+
+---
+
+# 📈 Analytics & Reporting
+
+The system supports:
+
+### Transaction Analytics
+
+* Genuine Transactions
+* Fraud Transactions
+* Risk Distribution
+
+### Fraud Analytics
+
+* Area-wise Fraud Analysis
+* Bank-wise Fraud Analysis
+* Fraud Trends
+* Risk Heatmaps
+
+### SAR Reporting
+
+* Regulatory Compliance
+* Suspicious Activity Reports
+* Investigation Support
+
+---
+
+# 🔒 Key Features
+
+✅ Real-Time Fraud Detection
+
+✅ AI-Powered Decision Engine
+
+✅ Google Gemini Integration
+
+✅ Risk Scoring Mechanism
+
+✅ Rule-Based Validation Engine
+
+✅ Automatic Fraud Alerts
+
+✅ Case Management System
+
+✅ SAR Reporting Service
+
+✅ Microservices Architecture
+
+✅ Role-Based Dashboards
+
+✅ Service Discovery with Eureka
+
+✅ Centralized Configuration
+
+✅ API Gateway Routing
+
+---
+
+# 🚀 Future Enhancements
+
+* Machine Learning Based Risk Prediction
+* Real-Time Kafka Event Streaming
+* Device Fingerprinting
+* Behavioral Biometrics
+* Geo-Fencing
+* Multi-Factor Authentication
+* Fraud Pattern Clustering
+* Real-Time Dashboard Analytics
+* Cloud Deployment (AWS / Azure)
+
+---
+
+# 👨‍💻 Author
+
+**Sai Venkat**
+
+MERN Stack & Java Full Stack Developer
+
+Special Interests:
+
+* Distributed Systems
+* Spring Boot Microservices
+* Fraud Detection Systems
+* Artificial Intelligence
+* Cyber Security
+* Cloud-Native Applications
+
+---
+
+## ⭐ If you found this project interesting, don't forget to star the repository.
